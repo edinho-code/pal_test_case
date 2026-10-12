@@ -6,18 +6,19 @@ let leads = [];
 let selectedId = null;
 try {
   const stored = JSON.parse(localStorage.getItem(key) || '[]');
-  if (!Array.isArray(stored) || stored.some(x => !x || typeof x.id !== 'string' || ['name','email','company','status','summary','nextStep'].some(k => typeof x[k] !== 'string'))) throw new Error('Formato inválido');
-  leads = stored;
-} catch { notice.textContent = 'Não foi possível recuperar os dados locais. Novos registros podem ser cadastrados.'; }
+  if (!Array.isArray(stored) || stored.some(x => !x || typeof x.id !== 'string' || ['name','email','company','status','summary','nextStep'].some(k => typeof x[k] !== 'string'))) throw new Error('Invalid data format');
+  const legacyStatuses = { '\u004eovo': 'New', 'Em conversa': 'In conversation', 'Qualificado': 'Qualified', 'Acompanhar': 'Follow up' };
+  leads = stored.map(lead => ({ ...lead, status: legacyStatuses[lead.status] || lead.status }));
+} catch { notice.textContent = 'Local records could not be restored. You can add new leads.'; }
 function persist(next) {
   try { localStorage.setItem(key, JSON.stringify(next)); leads = next; return true; }
-  catch { notice.textContent = 'Não foi possível salvar. Verifique se o navegador permite armazenamento local.'; return false; }
+  catch { notice.textContent = 'Unable to save. Check that your browser allows local storage.'; return false; }
 }
 function render() {
-  const query = document.querySelector('#search').value.toLocaleLowerCase('pt-BR');
-  const filtered = leads.filter(x => [x.name,x.email,x.company].join(' ').toLocaleLowerCase('pt-BR').includes(query));
+  const query = document.querySelector('#search').value.toLocaleLowerCase('en-US');
+  const filtered = leads.filter(x => [x.name,x.email,x.company].join(' ').toLocaleLowerCase('en-US').includes(query));
   const body = document.querySelector('#leads'); body.replaceChildren();
-  document.querySelector('#count').textContent = `${leads.length} registros`;
+  document.querySelector('#count').textContent = `${leads.length} records`;
   document.querySelector('#empty').hidden = filtered.length > 0;
   for (const lead of filtered) {
     const row = document.createElement('tr');
@@ -26,7 +27,7 @@ function render() {
     const email = document.createElement('small'); email.textContent = lead.email; contact.append(email); row.append(contact);
     for (const value of [lead.company || '—', lead.status]) { const td = document.createElement('td'); td.textContent = value; row.append(td); }
     const cell = document.createElement('td'); const button = document.createElement('button');
-    button.textContent = 'Abrir'; button.setAttribute('aria-label', `Abrir ${lead.name}`);
+    button.textContent = 'Open'; button.setAttribute('aria-label', `Open ${lead.name}`);
     button.onclick = () => selectLead(lead.id); cell.append(button); row.append(cell); body.append(row);
   }
 }
@@ -40,16 +41,16 @@ function selectLead(id) {
 leadForm.onsubmit = event => {
   event.preventDefault(); const data = new FormData(leadForm);
   const name = data.get('name').trim(); const email = data.get('email').trim();
-  if (!name || !email) { notice.textContent = 'Preencha nome e email.'; return; }
-  const lead = {id:crypto.randomUUID(),name,email,company:data.get('company').trim(),status:'Novo',summary:'',nextStep:''};
+  if (!name || !email) { notice.textContent = 'Enter a name and email.'; return; }
+  const lead = {id:crypto.randomUUID(),name,email,company:data.get('company').trim(),status:'New',summary:'',nextStep:''};
   if (!persist([...leads,lead])) return;
-  leadForm.reset(); selectLead(lead.id); notice.textContent = 'Lead adicionado.';
+  leadForm.reset(); selectLead(lead.id); notice.textContent = 'Lead added.';
 };
 outcomeForm.onsubmit = event => {
   event.preventDefault(); if (!selectedId) return;
   const data = new FormData(outcomeForm);
   const next = leads.map(x => x.id === selectedId ? {...x,status:data.get('status'),summary:data.get('summary').trim(),nextStep:data.get('nextStep').trim()} : x);
-  if (persist(next)) { render(); notice.textContent = 'Resultado salvo neste navegador.'; }
+  if (persist(next)) { render(); notice.textContent = 'Outcome saved in this browser.'; }
 };
 document.querySelector('#search').oninput = render;
 render();

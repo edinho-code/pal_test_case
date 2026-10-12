@@ -1,40 +1,46 @@
-# MVP proposto
+# Proposed MVP
 
-## Objetivo
+## Objective
 
-Demonstrar uma jornada de qualificação de lead por conversa Tavus, com resultado estruturado em tabela simples, sem CRM externo.
+Demonstrate lead qualification through a Tavus conversation, with structured outcomes in a simple table and no external CRM integration.
 
-## Decisões pendentes
+## Confirmed decisions
 
-- Decisão tomada: sem integração CRM externa; dados demonstrativos em tabela local.
-- Segmento e produto oferecido pelo SDR.
-- Stack, hospedagem e identificação de usuários.
-- Campos de qualificação e definição de lead qualificado.
+- No external CRM integration.
+- Initial demonstration data stored in a browser-local table.
+- Code, UI, and project documentation in English.
 
-## Escopo inicial proposto
+## Open decisions
 
-- Lista/detalhe de leads e histórico de atividades.
-- Início e encerramento de conversa Tavus.
-- PAL em português com perguntas de descoberta e conhecimento aprovado.
-- Resumo, necessidades, informações confirmadas e próximo passo.
-- Estados de sincronização e recuperação de falhas.
+- Target segment and product offered by the SDR.
+- Backend stack, hosting, and user identification.
+- Qualification fields and qualified-lead criteria.
+- Spoken PAL language for the demonstration.
 
-Agendamento automático e comunicação externa ficam para decisão posterior.
+## Proposed scope
 
-## Critérios de aceite
+- Lead list, detail view, and activity history.
+- Start and end a Tavus conversation.
+- PAL with discovery questions and approved product knowledge.
+- Summary, needs, confirmed information, and next step.
+- Synchronization states and failure recovery.
 
-- Chave Tavus não aparece no navegador nem no repositório.
-- Sessão está vinculada ao lead autorizado no backend.
-- Usuário consegue iniciar e encerrar a conversa.
-- Dados ausentes são apresentados como desconhecidos.
-- Resultado salva uma atividade no lead correto; repetição de evento não duplica atividade.
-- Falha de integração é visível e recuperável.
-- Demonstração identifica claramente dados fictícios e integrações simuladas.
+Automatic scheduling and external communications require a later scope decision.
 
-## Validação planejada
+## Acceptance criteria
 
-Validar primeiro o modo demonstrativo e criação de sessão em test_mode. Uma conversa real deve validar comportamento em português, tools e resultado comercial. Cobrir abandono, falha CRM e entrega repetida de evento.
+- Tavus API key stays out of browser code and Git.
+- The backend links each session to an authorized lead.
+- Users can start and end a conversation.
+- Missing data remains unknown.
+- Outcomes attach to the correct lead; repeated events do not duplicate activities.
+- Integration failures are visible and recoverable.
+- The demonstration clearly identifies fictional data and simulated integrations.
 
-## Métricas candidatas
+## Planned validation
 
-Conclusão da qualificação, completude dos campos, sucesso da gravação CRM, tempo até o resultado e custo por qualificação. Não há resultados medidos nesta etapa.
+Check the local demonstration and session creation with test_mode first. A real conversation must validate PAL behavior, tools, and saved outcomes. Cover abandonment, persistence failures, and repeated events.
+
+## Candidate metrics
+
+Qualification completion, field completeness, successful outcome persistence, time to outcome, and cost per qualification. No results have been measured yet.

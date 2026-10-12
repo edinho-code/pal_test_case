@@ -1,16 +1,16 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="en-US">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PAL · Tavus Case</title><link rel="stylesheet" href="styles.css"></head>
 <body>
-<header><a class="brand" href="./">PAL<span> / Tavus Case</span></a><span class="badge">Protótipo · dados locais</span></header>
+<header><a class="brand" href="./">PAL<span> / Tavus Case</span></a><span class="badge">Prototype · local data</span></header>
 <main>
-<section class="intro"><p class="eyebrow">CONVERSAS QUE VIRAM PRÓXIMOS PASSOS</p><h1>Conheça o lead.<br>Continue a conversa.</h1><p>Uma mesa de trabalho simples para o seu case Tavus.</p></section>
+<section class="intro"><p class="eyebrow">CONVERSATIONS THAT MOVE THINGS FORWARD</p><h1>Meet your lead.<br>Keep the conversation going.</h1><p>A simple workspace for your Tavus case.</p></section>
 <div class="layout"><section class="panel"><div class="section-title"><h2>Leads</h2><span id="count"></span></div>
-<form id="lead-form"><label>Nome<input name="name" required maxlength="100" placeholder="Nome do contato"></label><label>Email<input name="email" type="email" required maxlength="200" placeholder="contato@empresa.com"></label><label>Empresa<input name="company" maxlength="100" placeholder="Empresa"></label><button>Adicionar lead</button></form>
-<label class="search">Buscar<input id="search" type="search" placeholder="Nome, email ou empresa"></label>
-<div class="table-wrap"><table><thead><tr><th>Contato</th><th>Empresa</th><th>Status</th><th></th></tr></thead><tbody id="leads"></tbody></table></div><p id="empty" hidden>Nenhum lead encontrado.</p>
-</section><aside class="panel"><div class="section-title"><h2>Área da conversa</h2><span class="badge">Tavus pendente</span></div><div class="call-placeholder"><div class="orb">P</div><h3>Seu PAL entra aqui</h3><p>A chamada real será conectada por um backend com a chave Tavus protegida.</p></div>
-<p id="selection">Selecione um lead na tabela para registrar o resultado.</p>
-<form id="outcome-form" hidden><label>Status<select name="status"><option>Novo</option><option>Em conversa</option><option>Qualificado</option><option>Acompanhar</option></select></label><label>Resumo<textarea name="summary" rows="4" maxlength="4000" placeholder="Necessidades e informações confirmadas"></textarea></label><label>Próximo passo<input name="nextStep" maxlength="500" placeholder="Ex.: preparar uma demonstração"></label><button>Salvar resultado</button></form></aside></div>
-<p class="footnote">Este protótipo não realiza chamadas Tavus. Registros ficam apenas neste navegador; use dados fictícios.</p><p id="notice" role="status" aria-live="polite"></p>
+<form id="lead-form"><label>Name<input name="name" required maxlength="100" placeholder="Contact name"></label><label>Email<input name="email" type="email" required maxlength="200" placeholder="contact@company.com"></label><label>Company<input name="company" maxlength="100" placeholder="Company"></label><button>Add lead</button></form>
+<label class="search">Search<input id="search" type="search" placeholder="Name, email, or company"></label>
+<div class="table-wrap"><table><thead><tr><th>Contact</th><th>Company</th><th>Status</th><th></th></tr></thead><tbody id="leads"></tbody></table></div><p id="empty" hidden>No leads found.</p>
+</section><aside class="panel"><div class="section-title"><h2>Conversation workspace</h2><span class="badge">Tavus pending</span></div><div class="call-placeholder"><div class="orb">P</div><h3>Your PAL belongs here</h3><p>Live calls will connect through a backend that keeps your Tavus API key secure.</p></div>
+<p id="selection">Select a lead in the table to record the outcome.</p>
+<form id="outcome-form" hidden><label>Status<select name="status"><option>New</option><option>In conversation</option><option>Qualified</option><option>Follow up</option></select></label><label>Summary<textarea name="summary" rows="4" maxlength="4000" placeholder="Needs and confirmed details"></textarea></label><label>Next step<input name="nextStep" maxlength="500" placeholder="For example: prepare a demo"></label><button>Save outcome</button></form></aside></div>
+<p class="footnote">This prototype does not make Tavus calls. Records stay in this browser; use fictional data.</p><p id="notice" role="status" aria-live="polite"></p>
 </main><script src="app.js"></script></body></html>

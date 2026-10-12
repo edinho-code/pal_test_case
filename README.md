@@ -1,44 +1,46 @@
 # Tavus CRM — PAL Test Case
 
-Projeto de case e solução CRM com conversas multimodais em tempo real usando Tavus.
+A Tavus conversational prototype for lead qualification, using a simple data table without an external CRM integration.
 
 ## Status
 
-Protótipo local em HTML/CSS/JavaScript com tabela de leads e persistência no navegador. Integração real Tavus ainda não implementada.
+Local HTML/CSS/JavaScript prototype with lead records persisted in browser localStorage. Live Tavus integration is not implemented yet.
 
-## MVP proposto
+## Run the prototype
 
-Um SDR virtual conversa por vídeo, identifica as necessidades do lead e registra um resumo e o próximo passo em uma tabela simples. Sem integração com CRM externo, conforme escopo escolhido.
+Open `index.html` in a browser. Add and search leads, select a contact, and save their status, summary, and next step. Use fictional data. Records stay in the current browser.
 
-Abra `index.html` no navegador para usar o protótipo. Cadastre leads, selecione um registro e salve notas e o próximo passo. Dados ficam no localStorage deste navegador. A área Tavus indica configuração pendente; não simula uma conversa real.
+The conversation area displays a pending integration state and does not simulate a live Tavus call.
 
-Fluxo: identificar lead → criar sessão Tavus no backend → conversar → confirmar dados → registrar resultado → encerrar sessão → reconciliar transcrição final.
+## Planned flow
 
-## Configuração
+Identify lead → create Tavus session on the backend → converse → confirm details → save outcome → end session → reconcile final transcript.
 
-Copie `.env.example` para `.env.local` quando a aplicação for criada. Preencha os valores apenas localmente; nunca envie credenciais ao GitHub. O exemplo descreve a configuração planejada e ainda não é consumido por código.
+## Configuration
 
-- `TAVUS_API_KEY`: chave de API mantida no servidor.
-- `TAVUS_PAL_ID`: PAL escolhido ou criado para o case.
-- `TAVUS_FACE_ID`: Face escolhida; pode ser fornecida pela configuração do PAL.
-- `APP_BASE_URL`: URL da aplicação.
-- `TAVUS_CALLBACK_URL`: endpoint HTTPS público para eventos da conversa, após implementação.
-- `CRM_PROVIDER`: CRM escolhido para o MVP.
+Copy `.env.example` to `.env.local` when implementing the backend. Keep credentials local and server-side. These variables describe planned configuration; the current static prototype does not read them.
 
-## Organização
+- `TAVUS_API_KEY`: server-side API key.
+- `TAVUS_PAL_ID`: selected or created PAL.
+- `TAVUS_FACE_ID`: selected Face, unless supplied by the PAL configuration.
+- `APP_BASE_URL`: application URL.
+- `TAVUS_CALLBACK_URL`: public HTTPS callback endpoint, once implemented.
 
-- `docs/mvp.md`: escopo e critérios de aceite propostos.
-- `.agents/skills/tavus-crm/`: skill de produto, API e arquitetura CRM.
-- `AGENTS.md`: instruções de trabalho para agentes neste repositório.
+## Project structure
 
-## Próximas etapas
+- `index.html`, `styles.css`, `app.js`: local prototype.
+- `docs/mvp.md`: proposed scope and acceptance criteria.
+- `.agents/skills/tavus-crm/`: Tavus product and integration reference skill.
+- `AGENTS.md`: contributor and agent instructions.
 
-1. Confirmar público e resultado principal da demonstração.
-2. Escolher stack e implementar a aplicação com modo demonstrativo.
-3. Configurar PAL/Face e integrar criação e encerramento de sessão.
-4. Implementar registro de resultados e recuperação de falhas.
-5. Validar a demonstração e documentar métricas reais.
+## Next steps
 
-## Referência
+1. Confirm the target audience and demonstration outcome.
+2. Implement the backend and session lifecycle.
+3. Configure the PAL and Face.
+4. Connect structured outcomes and final transcripts to the data table.
+5. Validate the demonstration and report measured results.
 
-[Documentação Tavus](https://docs.tavus.io/api-reference/overview) · [Contrato OpenAPI](https://docs.tavus.io/openapi.yaml)
+## References
+
+[Tavus documentation](https://docs.tavus.io/api-reference/overview) · [OpenAPI contract](https://docs.tavus.io/openapi.yaml)

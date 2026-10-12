@@ -1,11 +1,11 @@
 # Tavus CRM
 
-Use a skill em `.agents/skills/tavus-crm/SKILL.md` para tarefas Tavus.
+Use `.agents/skills/tavus-crm/SKILL.md` for Tavus tasks. Read `docs/mvp.md` before implementing the MVP.
 
-Responda em português por padrão. Leia `docs/mvp.md` antes de implementar o MVP.
+All code, identifiers, comments, UI copy, headings, README content, technical documentation, and commit messages must be in English. Conversation with the user may remain in Portuguese. This project language requirement takes precedence over language defaults in reference skills.
 
-Mantenha credenciais no backend e fora do Git. Atualize `.env.example` com nomes e placeholders quando adicionar configurações.
+Keep credentials server-side and out of Git. Update `.env.example` with names and placeholders when adding configuration.
 
-Consulte a documentação oficial atual antes de implementar payloads Tavus. Diferencie mock, integração implementada e chamada real validada. Não afirmar que a integração funciona sem evidência.
+Consult current official documentation before implementing Tavus payloads. Distinguish mocks, implemented integrations, and verified live calls. Do not claim an integration works without evidence.
 
-O usuário escolheu protótipo sem integração CRM externa. Use uma tabela simples para dados da demonstração. A base inicial é HTML/CSS/JavaScript sem dependências; dados locais no navegador são fictícios.
+The user selected a prototype without external CRM integration. Use a simple table for demonstration data. The initial implementation uses dependency-free HTML/CSS/JavaScript and fictional browser-local records.
