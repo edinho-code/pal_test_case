@@ -8,4 +8,4 @@ Mantenha credenciais no backend e fora do Git. Atualize `.env.example` com nomes
 
 Consulte a documentação oficial atual antes de implementar payloads Tavus. Diferencie mock, integração implementada e chamada real validada. Não afirmar que a integração funciona sem evidência.
 
-O CRM alvo ainda está em definição: não adicionar dependência de fornecedor até a escolha do usuário. A aplicação ainda não tem stack definida.
+O usuário escolheu protótipo sem integração CRM externa. Use uma tabela simples para dados da demonstração. A base inicial é HTML/CSS/JavaScript sem dependências; dados locais no navegador são fictícios.

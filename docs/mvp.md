@@ -2,11 +2,11 @@
 
 ## Objetivo
 
-Demonstrar uma jornada de qualificação de lead por conversa Tavus, com resultado estruturado disponível no CRM.
+Demonstrar uma jornada de qualificação de lead por conversa Tavus, com resultado estruturado em tabela simples, sem CRM externo.
 
 ## Decisões pendentes
 
-- CRM próprio ou fornecedor externo.
+- Decisão tomada: sem integração CRM externa; dados demonstrativos em tabela local.
 - Segmento e produto oferecido pelo SDR.
 - Stack, hospedagem e identificação de usuários.
 - Campos de qualificação e definição de lead qualificado.

@@ -4,11 +4,13 @@ Projeto de case e solução CRM com conversas multimodais em tempo real usando T
 
 ## Status
 
-Base de documentação e configuração preparada. A aplicação e as integrações ainda não foram implementadas.
+Protótipo local em HTML/CSS/JavaScript com tabela de leads e persistência no navegador. Integração real Tavus ainda não implementada.
 
 ## MVP proposto
 
-Um SDR virtual conversa por vídeo, identifica as necessidades do lead e registra um resumo e o próximo passo no CRM. O fornecedor CRM e o público do case estão em definição.
+Um SDR virtual conversa por vídeo, identifica as necessidades do lead e registra um resumo e o próximo passo em uma tabela simples. Sem integração com CRM externo, conforme escopo escolhido.
+
+Abra `index.html` no navegador para usar o protótipo. Cadastre leads, selecione um registro e salve notas e o próximo passo. Dados ficam no localStorage deste navegador. A área Tavus indica configuração pendente; não simula uma conversa real.
 
 Fluxo: identificar lead → criar sessão Tavus no backend → conversar → confirmar dados → registrar resultado → encerrar sessão → reconciliar transcrição final.
 
@@ -31,7 +33,7 @@ Copie `.env.example` para `.env.local` quando a aplicação for criada. Preencha
 
 ## Próximas etapas
 
-1. Confirmar público, CRM e resultado principal da demonstração.
+1. Confirmar público e resultado principal da demonstração.
 2. Escolher stack e implementar a aplicação com modo demonstrativo.
 3. Configurar PAL/Face e integrar criação e encerramento de sessão.
 4. Implementar registro de resultados e recuperação de falhas.
