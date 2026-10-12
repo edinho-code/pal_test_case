@@ -1,0 +1,4 @@
+interface:
+  display_name: "Tavus CRM"
+  short_description: "Produto, APIs e cases Tavus integrados a CRM"
+  default_prompt: "Use $tavus-crm para planejar meu case e a integração Tavus com CRM."
