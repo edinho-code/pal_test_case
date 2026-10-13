@@ -1,0 +1,872 @@
+{
+  "schema_version": "1.1.0",
+  "conversion_outcome": {
+    "event": "paid_conversion",
+    "window_days": 60,
+    "eligible_population": "Free accounts in a mature signup cohort",
+    "definition_status": "Proposed; validate with the Growth data owner"
+  },
+  "nba_rules": [
+    {
+      "rule_id": "ai_sdr_conversion_below_target",
+      "priority_rank": 115,
+      "recommendation_label": "Below target",
+      "recommendation_type": "high",
+      "when": {
+        "all": [
+          {
+            "field": "agentPerformance.deployed",
+            "operator": "equals",
+            "value": true
+          },
+          {
+            "field": "agentPerformance.meetingsHeld",
+            "operator": "gte_field",
+            "value": "agentPerformance.minimumMeetingsForReview"
+          },
+          {
+            "field": "agentPerformance.qualificationRate",
+            "operator": "lt_field",
+            "value": "agentPerformance.targetQualificationRate"
+          }
+        ]
+      },
+      "behavior": {
+        "summary": "AI SDR is deployed; meeting-to-qualified-opportunity conversion is below the account target with the demo minimum sample met",
+        "input_signals": [
+          {
+            "field": "agentPerformance.meetingsHeld",
+            "source": "customer_outcome_table",
+            "provenance": "synthetic",
+            "description": "Completed meetings in the last 30 days"
+          },
+          {
+            "field": "agentPerformance.qualifiedOpportunities",
+            "source": "customer_outcome_table",
+            "provenance": "synthetic",
+            "description": "Meetings that became qualified opportunities"
+          },
+          {
+            "field": "agentPerformance.qualificationRate",
+            "source": "derived_customer_outcome",
+            "provenance": "synthetic",
+            "description": "Meeting-to-qualified-opportunity rate"
+          },
+          {
+            "field": "agentPerformance.targetQualificationRate",
+            "source": "account_goal",
+            "provenance": "synthetic",
+            "description": "Target rate supplied for this fictional account"
+          }
+        ]
+      },
+      "bottleneck_hypothesis": "The AI SDR may be reaching the wrong prospects, qualifying inconsistently, or handing off at the wrong point. The aggregate rate alone does not establish the cause.",
+      "conversion_relationship": {
+        "status": "not_estimated",
+        "association_id": null
+      },
+      "next_best_action": {
+        "action_id": "review_ai_sdr_performance_with_pal",
+        "title": "Review AI SDR outcomes and choose one improvement to test",
+        "channel": "Proactive, user-controlled PAL review; outcome data supplied in a simple table",
+        "pal_brief": "Share the account\u2019s meeting and qualification counts, ask what a qualified outcome means for their team, and review representative successful and unsuccessful conversations if available. Recommend one change to test, such as qualification criteria, prospect fit, or handoff timing. Confirm the user agrees before changing the agent.",
+        "success_event": "qualified_opportunity_rate_improved_in_controlled_test",
+        "experiment_design": {
+          "experiment_id": "ai_sdr_qualification_improvement_v1",
+          "status": "Proposed; not launched",
+          "hypothesis": "One targeted change to prospect fit, qualification, or handoff improves qualified-opportunity rate without reducing qualified meeting volume.",
+          "randomization_unit": "Lead or account, depending on the customer workflow",
+          "eligible_population": "AI SDR deployments with at least the configured minimum completed-meeting sample and a reliable outcome label.",
+          "arms": [
+            {
+              "arm": "Control",
+              "experience": "Current AI SDR configuration."
+            },
+            {
+              "arm": "Treatment",
+              "experience": "One agreed configuration change; change one factor at a time."
+            }
+          ],
+          "primary_metric": "Qualified opportunities divided by completed meetings during the test window",
+          "guardrail_metrics": [
+            "Qualified meeting volume",
+            "Show rate",
+            "Sales-accepted lead rate",
+            "Human override or disqualification rate"
+          ]
+        }
+      },
+      "guardrails": [
+        "The 30-meeting minimum is a demo setting, not a statistically powered sample-size recommendation.",
+        "Use customer-approved meeting outcomes and data access; do not infer qualification from a single conversation cue.",
+        "Compare control and treatment over the same time window and lead population.",
+        "Do not edit the live agent automatically; the customer must approve the change.",
+        "If the required sample or outcome labels are missing, report insufficient evidence instead of calling the agent good or bad."
+      ]
+    },
+    {
+      "rule_id": "paid_plan_credits_exhausted_before_first_value",
+      "priority_rank": 108,
+      "when": {
+        "all": [
+          {
+            "field": "planType",
+            "operator": "equals",
+            "value": "paid"
+          },
+          {
+            "field": "creditsExhausted",
+            "operator": "equals",
+            "value": true
+          },
+          {
+            "field": "firstValue",
+            "operator": "equals",
+            "value": false
+          }
+        ]
+      },
+      "behavior": {
+        "summary": "Paid-plan credits exhausted before the account reached first value",
+        "input_signals": [
+          {
+            "field": "planType",
+            "source": "billing_state",
+            "provenance": "synthetic",
+            "description": "Current plan category"
+          },
+          {
+            "field": "creditsExhausted",
+            "source": "product_or_billing_event",
+            "provenance": "synthetic",
+            "description": "Plan allowance exhausted"
+          },
+          {
+            "field": "minutesConsumed",
+            "source": "usage_event",
+            "provenance": "synthetic",
+            "description": "Minutes consumed before first value"
+          },
+          {
+            "field": "firstValue",
+            "source": "verified_product_event_or_user_confirmation",
+            "provenance": "synthetic",
+            "description": "Whether the selected test objective was reached"
+          }
+        ]
+      },
+      "bottleneck_hypothesis": "The account may be spending its paid allowance on setup, repeated attempts, or a technical issue before reaching its intended outcome.",
+      "conversion_relationship": {
+        "status": "not_estimated",
+        "association_id": null
+      },
+      "next_best_action": {
+        "action_id": "diagnose_paid_usage_before_refill",
+        "title": "Diagnose the blocker and optimize usage before a refill",
+        "channel": "In-product support; optional user-controlled PAL walkthrough",
+        "pal_brief": "Review where the paid minutes went, identify setup errors or repeated low-value attempts, and guide one efficient test. Explain refill options only after the blocker and the account\u2019s plan terms are clear.",
+        "success_event": "first_value_reached_within_current_or_eligible_allowance"
+      },
+      "guardrails": [
+        "Do not offer a paid-plan upgrade to an account already on a paid plan.",
+        "Do not automatically refill an allowance before diagnosing failed setup or repeated attempts.",
+        "Use the account\u2019s actual plan terms and confirm any billing change."
+      ]
+    },
+    {
+      "rule_id": "paid_plan_credits_exhausted_after_first_value",
+      "priority_rank": 105,
+      "when": {
+        "all": [
+          {
+            "field": "planType",
+            "operator": "equals",
+            "value": "paid"
+          },
+          {
+            "field": "creditsExhausted",
+            "operator": "equals",
+            "value": true
+          },
+          {
+            "field": "firstValue",
+            "operator": "equals",
+            "value": true
+          }
+        ]
+      },
+      "behavior": {
+        "summary": "Paid account reached first value and repeat use before exhausting its allowance",
+        "input_signals": [
+          {
+            "field": "planType",
+            "source": "billing_state",
+            "provenance": "synthetic",
+            "description": "Current plan category"
+          },
+          {
+            "field": "creditsExhausted",
+            "source": "product_or_billing_event",
+            "provenance": "synthetic",
+            "description": "Plan allowance exhausted"
+          },
+          {
+            "field": "firstValue",
+            "source": "verified_product_event_or_user_confirmation",
+            "provenance": "synthetic",
+            "description": "The selected test objective was reached"
+          },
+          {
+            "field": "repeatUse",
+            "source": "product_event",
+            "provenance": "synthetic",
+            "description": "The workflow was used again on a separate occasion"
+          }
+        ]
+      },
+      "bottleneck_hypothesis": "The account has experienced value and may need an eligible refill to continue the established workflow; a promotion may change the likelihood or economics of recharging.",
+      "conversion_relationship": {
+        "status": "not_estimated",
+        "association_id": null
+      },
+      "next_best_action": {
+        "action_id": "test_eligible_recharge_promotion",
+        "title": "Offer an eligible refill and test a promotion",
+        "channel": "In-product billing or refill surface; optional support for questions",
+        "pal_brief": "Explain the standard refill option and any promotion assigned by the experiment. Do not imply urgency or personalize a discount based on inferred emotion.",
+        "success_event": "paid_top_up_completed_within_7_days",
+        "experiment_design": {
+          "experiment_id": "post_value_recharge_promo_v1",
+          "status": "Proposed; not randomized in this demo",
+          "hypothesis": "A pre-approved promotion increases incremental refill completion without reducing net revenue or margin per eligible account.",
+          "randomization_unit": "Account or workspace",
+          "eligible_population": "Paid accounts that reached first value and exhausted the plan allowance, subject to billing and promotion eligibility.",
+          "arms": [
+            {
+              "arm": "Control",
+              "experience": "Standard eligible refill offer without promotion."
+            },
+            {
+              "arm": "Treatment",
+              "experience": "Pre-approved promotional refill offer; terms and value set by the pricing owner."
+            }
+          ],
+          "primary_metric": "Refill completion within 7 days of offer exposure",
+          "guardrail_metrics": [
+            "Net revenue and gross margin per eligible account",
+            "Repeat use after refill",
+            "Refunds, support contacts, and plan cancellation"
+          ],
+          "title": "Post-value refill promotion A/B test"
+        }
+      },
+      "guardrails": [
+        "The promotion must be approved and compatible with the account\u2019s plan and billing terms.",
+        "Randomize at account/workspace level and keep assignment stable to prevent offer crossover.",
+        "Compare incremental refill completion and revenue/margin; conversion alone is insufficient.",
+        "Do not infer willingness to pay or select discounts from facial expression, voice emotion, or frustration.",
+        "The prototype describes an experiment only; it does not create offers, charge accounts, or assign experiment arms."
+      ]
+    },
+    {
+      "rule_id": "trial_credits_exhausted_before_first_value",
+      "priority_rank": 110,
+      "when": {
+        "all": [
+          {
+            "field": "planType",
+            "operator": "equals",
+            "value": "free_trial"
+          },
+          {
+            "field": "creditsExhausted",
+            "operator": "equals",
+            "value": true
+          },
+          {
+            "field": "daysToCreditExhaustion",
+            "operator": "lte",
+            "value": 2
+          },
+          {
+            "field": "conversationCount",
+            "operator": "lte",
+            "value": 1
+          },
+          {
+            "field": "firstValue",
+            "operator": "equals",
+            "value": false
+          }
+        ]
+      },
+      "behavior": {
+        "summary": "Trial minutes exhausted within two days, with at most one conversation and no first value",
+        "input_signals": [
+          {
+            "field": "creditsExhausted",
+            "source": "product_event",
+            "provenance": "synthetic",
+            "description": "Trial minute allowance exhausted"
+          },
+          {
+            "field": "daysToCreditExhaustion",
+            "source": "derived_product_event",
+            "provenance": "synthetic",
+            "description": "Days from signup to trial allowance exhaustion"
+          },
+          {
+            "field": "conversationCount",
+            "source": "product_event",
+            "provenance": "synthetic",
+            "description": "Conversation attempts before the allowance was exhausted"
+          },
+          {
+            "field": "firstValue",
+            "source": "verified_product_event_or_user_confirmation",
+            "provenance": "synthetic",
+            "description": "Whether the account achieved its selected test objective"
+          }
+        ]
+      },
+      "bottleneck_hypothesis": "The free-trial account may have exhausted its allowance during setup or an unsuccessful first test before experiencing useful value.",
+      "conversion_relationship": {
+        "status": "not_estimated",
+        "association_id": null
+      },
+      "next_best_action": {
+        "action_id": "offer_guided_trial_recovery",
+        "title": "Optimize the first test and review a small trial-minute extension",
+        "channel": "In-product support; optional user-controlled PAL walkthrough",
+        "pal_brief": "Acknowledge that the free-trial minutes ran out before the user\u2019s goal was reached. Ask what happened, offer one focused low-consumption test, and check whether a small one-time minute extension is available under the applicable trial policy. Do not promise or grant credits automatically.",
+        "success_event": "first_value_reached_after_eligible_trial_extension"
+      },
+      "guardrails": [
+        "Treat the two-day and one-conversation thresholds as illustrative triggers to validate with real cohorts.",
+        "A trial-minute extension is a proposed support intervention, subject to the applicable trial policy and account eligibility.",
+        "Optimize the test before adding minutes; do not automatically replenish an account that is still blocked by setup or errors.",
+        "Do not claim an extension was granted unless the credit change is confirmed.",
+        "Measure first useful outcome and subsequent conversion separately; do not assume an extension causes conversion."
+      ]
+    },
+    {
+      "rule_id": "api_authentication_block",
+      "priority_rank": 100,
+      "when": {
+        "all": [
+          {
+            "field": "apiErrors",
+            "operator": "gt",
+            "value": 0
+          },
+          {
+            "field": "apiConnected",
+            "operator": "equals",
+            "value": false
+          },
+          {
+            "field": "firstValue",
+            "operator": "equals",
+            "value": false
+          }
+        ]
+      },
+      "behavior": {
+        "summary": "Repeated API authentication errors before first value",
+        "input_signals": [
+          {
+            "field": "apiErrors",
+            "source": "product_event",
+            "provenance": "synthetic",
+            "description": "Recorded API authentication failures"
+          },
+          {
+            "field": "apiConnected",
+            "source": "product_state",
+            "provenance": "synthetic",
+            "description": "Whether a successful API connection is recorded"
+          }
+        ]
+      },
+      "bottleneck_hypothesis": "The account may be blocked by API authentication setup.",
+      "conversion_relationship": {
+        "status": "not_estimated",
+        "association_id": null
+      },
+      "next_best_action": {
+        "action_id": "troubleshoot_api_authentication",
+        "title": "Troubleshoot API authentication",
+        "channel": "In-product guidance; optional PAL walkthrough",
+        "pal_brief": "Help the user identify and resolve the recorded API authentication issue. Confirm the issue is resolved before moving to a first conversation.",
+        "success_event": "api_connection_succeeded"
+      },
+      "guardrails": [
+        "Do not recommend an upgrade before first value.",
+        "Do not claim resolution without user confirmation or a successful connection event."
+      ]
+    },
+    {
+      "rule_id": "mcp_linked_without_tool_use",
+      "priority_rank": 90,
+      "when": {
+        "all": [
+          {
+            "field": "mcpLinked",
+            "operator": "equals",
+            "value": true
+          },
+          {
+            "field": "mcpToolUsed",
+            "operator": "equals",
+            "value": false
+          },
+          {
+            "field": "firstValue",
+            "operator": "equals",
+            "value": false
+          }
+        ]
+      },
+      "behavior": {
+        "summary": "MCP connector linked, but no successful tool call recorded",
+        "input_signals": [
+          {
+            "field": "mcpLinked",
+            "source": "product_event",
+            "provenance": "synthetic",
+            "description": "Connector authorization or setup completed"
+          },
+          {
+            "field": "mcpToolUsed",
+            "source": "product_event",
+            "provenance": "synthetic",
+            "description": "A successful tool call is present"
+          }
+        ]
+      },
+      "bottleneck_hypothesis": "The connector setup may not yet be connected to a working use case.",
+      "conversion_relationship": {
+        "status": "not_estimated",
+        "association_id": null
+      },
+      "next_best_action": {
+        "action_id": "test_first_mcp_tool",
+        "title": "Test the first MCP tool call",
+        "channel": "In-product guidance; optional PAL walkthrough",
+        "pal_brief": "Guide one safe, relevant tool test for the user's stated workflow. Confirm whether the tool returned a useful result.",
+        "success_event": "mcp_tool_call_succeeded"
+      },
+      "guardrails": [
+        "Use only a tool relevant to the stated use case.",
+        "Do not imply a tool call succeeded unless the result confirms it."
+      ]
+    },
+    {
+      "rule_id": "deployment_without_conversation",
+      "priority_rank": 85,
+      "when": {
+        "all": [
+          {
+            "field": "deploymentPublished",
+            "operator": "equals",
+            "value": true
+          },
+          {
+            "field": "conversationStarted",
+            "operator": "equals",
+            "value": false
+          },
+          {
+            "field": "firstValue",
+            "operator": "equals",
+            "value": false
+          }
+        ]
+      },
+      "behavior": {
+        "summary": "Hosted deployment published, but no conversation observed",
+        "input_signals": [
+          {
+            "field": "deploymentPublished",
+            "source": "product_event",
+            "provenance": "synthetic",
+            "description": "Hosted deployment published"
+          },
+          {
+            "field": "conversationStarted",
+            "source": "product_event",
+            "provenance": "synthetic",
+            "description": "A conversation through the deployment is recorded"
+          }
+        ]
+      },
+      "bottleneck_hypothesis": "The account may need to test the deployment or help reaching the hosted experience.",
+      "conversion_relationship": {
+        "status": "not_estimated",
+        "association_id": null
+      },
+      "next_best_action": {
+        "action_id": "test_hosted_deployment",
+        "title": "Test the published deployment",
+        "channel": "In-product checklist; optional PAL walkthrough",
+        "pal_brief": "Help the user open and test the published experience, then confirm whether a conversation can start.",
+        "success_event": "hosted_deployment_conversation_started"
+      },
+      "guardrails": [
+        "Do not assume the deployment has received eligible traffic.",
+        "Do not send external notifications from the prototype."
+      ]
+    },
+    {
+      "rule_id": "pal_created_without_conversation",
+      "priority_rank": 80,
+      "when": {
+        "all": [
+          {
+            "field": "palCreated",
+            "operator": "equals",
+            "value": true
+          },
+          {
+            "field": "conversationStarted",
+            "operator": "equals",
+            "value": false
+          },
+          {
+            "field": "firstValue",
+            "operator": "equals",
+            "value": false
+          }
+        ]
+      },
+      "behavior": {
+        "summary": "PAL created, but no first conversation attempted",
+        "input_signals": [
+          {
+            "field": "palCreated",
+            "source": "product_event",
+            "provenance": "synthetic",
+            "description": "PAL creation event recorded"
+          },
+          {
+            "field": "conversationStarted",
+            "source": "product_event",
+            "provenance": "synthetic",
+            "description": "First conversation attempt recorded"
+          }
+        ]
+      },
+      "bottleneck_hypothesis": "The account may need a concrete first test or help deciding what to try.",
+      "conversion_relationship": {
+        "status": "not_estimated",
+        "association_id": null
+      },
+      "next_best_action": {
+        "action_id": "guide_first_pal_conversation",
+        "title": "Guide a first PAL conversation",
+        "channel": "In-product invitation; user-controlled PAL session",
+        "pal_brief": "Confirm the user's stated use case and offer one short test. Ask whether the test achieved the intended goal.",
+        "success_event": "first_value_reached"
+      },
+      "guardrails": [
+        "Ask before starting a PAL session.",
+        "Do not count PAL creation or conversation start alone as first value."
+      ]
+    },
+    {
+      "rule_id": "signup_inactive_day_7",
+      "priority_rank": 65,
+      "when": {
+        "all": [
+          {
+            "field": "daysSinceSignup",
+            "operator": "gte",
+            "value": 7
+          },
+          {
+            "field": "daysSinceLastProductActivity",
+            "operator": "gte",
+            "value": 7
+          },
+          {
+            "field": "firstValue",
+            "operator": "equals",
+            "value": false
+          }
+        ]
+      },
+      "behavior": {
+        "summary": "No meaningful product activity recorded for seven days after signup",
+        "input_signals": [
+          {
+            "field": "daysSinceSignup",
+            "source": "derived_product_event",
+            "provenance": "synthetic",
+            "description": "Days since account creation"
+          },
+          {
+            "field": "daysSinceLastProductActivity",
+            "source": "derived_product_event",
+            "provenance": "synthetic",
+            "description": "Days since the last meaningful product event; signup is excluded"
+          }
+        ]
+      },
+      "bottleneck_hypothesis": "The account may be unclear about the next step, paused setup, or no longer be evaluating Tavus.",
+      "conversion_relationship": {
+        "status": "illustrative_hypothesis",
+        "association_id": "no_meaningful_activity_day_7"
+      },
+      "next_best_action": {
+        "action_id": "offer_relevant_restart_guide",
+        "title": "Offer a focused first-use guide",
+        "channel": "In-product guidance; use an external channel only with permission",
+        "pal_brief": "Ask whether the user is still evaluating Tavus and what they wanted to build. Offer a relevant first step, then respect a decline or no response.",
+        "success_event": "setup_resumed"
+      },
+      "guardrails": [
+        "Seven days is an illustrative trigger to validate against real activity patterns.",
+        "Suppress after opt-out, decline, or recent outreach.",
+        "Do not interpret inactivity alone as lack of intent."
+      ]
+    },
+    {
+      "rule_id": "industry_use_case_fit",
+      "priority_rank": 45,
+      "when": {
+        "all": [
+          {
+            "field": "industryUseCaseFit",
+            "operator": "equals",
+            "value": true
+          },
+          {
+            "field": "firstValue",
+            "operator": "equals",
+            "value": false
+          }
+        ]
+      },
+      "behavior": {
+        "summary": "Declared use case matches an illustrative target-industry pattern",
+        "input_signals": [
+          {
+            "field": "industry",
+            "source": "account_profile",
+            "provenance": "synthetic",
+            "description": "Industry provided for the fictional demo account"
+          },
+          {
+            "field": "industryUseCaseFit",
+            "source": "derived_segment",
+            "provenance": "synthetic",
+            "description": "Illustrative fit between the declared use case and a target segment"
+          }
+        ]
+      },
+      "bottleneck_hypothesis": "A relevant industry example may make it easier to select a first Tavus use case.",
+      "conversion_relationship": {
+        "status": "illustrative_hypothesis",
+        "association_id": "industry_use_case_fit"
+      },
+      "next_best_action": {
+        "action_id": "show_relevant_industry_example",
+        "title": "Show a relevant industry example",
+        "channel": "In-product example or template",
+        "pal_brief": "Use the declared industry and use case to suggest one relevant example. Ask whether it matches the user's actual goal.",
+        "success_event": "use_case_selected"
+      },
+      "guardrails": [
+        "Industry fit is a personalization hypothesis, not purchase intent.",
+        "Do not use this signal alone to trigger an upgrade offer."
+      ]
+    },
+    {
+      "rule_id": "no_setup_path_selected",
+      "priority_rank": 55,
+      "when": {
+        "all": [
+          {
+            "field": "palCreated",
+            "operator": "equals",
+            "value": false
+          },
+          {
+            "field": "path",
+            "operator": "equals",
+            "value": "Not selected"
+          },
+          {
+            "field": "firstValue",
+            "operator": "equals",
+            "value": false
+          }
+        ]
+      },
+      "behavior": {
+        "summary": "No setup path selected and no PAL created",
+        "input_signals": [
+          {
+            "field": "path",
+            "source": "product_state",
+            "provenance": "synthetic",
+            "description": "Selected setup path"
+          },
+          {
+            "field": "palCreated",
+            "source": "product_event",
+            "provenance": "synthetic",
+            "description": "PAL creation event recorded"
+          }
+        ]
+      },
+      "bottleneck_hypothesis": "The account may need help choosing a small, relevant use case before setup.",
+      "conversion_relationship": {
+        "status": "not_estimated",
+        "association_id": null
+      },
+      "next_best_action": {
+        "action_id": "choose_first_setup_path",
+        "title": "Help choose a first setup path",
+        "channel": "In-product use-case guide; optional PAL walkthrough",
+        "pal_brief": "Ask what the user wants to build and help choose one relevant setup path. Do not assume the industry example is relevant until confirmed.",
+        "success_event": "setup_path_selected"
+      },
+      "guardrails": [
+        "Do not make the user choose API, hosted deployment, or MCP unless it fits their use case.",
+        "Do not offer an upgrade before first value."
+      ]
+    },
+    {
+      "rule_id": "first_value_without_repeat_use",
+      "priority_rank": 40,
+      "when": {
+        "all": [
+          {
+            "field": "firstValue",
+            "operator": "equals",
+            "value": true
+          },
+          {
+            "field": "repeatUse",
+            "operator": "equals",
+            "value": false
+          }
+        ]
+      },
+      "behavior": {
+        "summary": "First useful conversation completed; repeat use not yet recorded",
+        "input_signals": [
+          {
+            "field": "firstValue",
+            "source": "verified_product_event_or_user_confirmation",
+            "provenance": "synthetic",
+            "description": "The account's selected test objective was reached"
+          },
+          {
+            "field": "repeatUse",
+            "source": "product_event",
+            "provenance": "synthetic",
+            "description": "A useful outcome on a separate occasion is recorded"
+          }
+        ]
+      },
+      "bottleneck_hypothesis": "The first test worked, but the account may need help repeating or placing it in a real workflow.",
+      "conversion_relationship": {
+        "status": "not_estimated",
+        "association_id": null
+      },
+      "next_best_action": {
+        "action_id": "support_repeat_workflow",
+        "title": "Help repeat or deploy the workflow",
+        "channel": "In-product guidance; optional PAL walkthrough",
+        "pal_brief": "Ask what the user wants to accomplish next. Suggest repeating or deploying the successful workflow only if it matches that need.",
+        "success_event": "repeat_use_or_workflow_deployed"
+      },
+      "guardrails": [
+        "Do not equate first value with upgrade readiness.",
+        "Do not upsell unless a relevant need or intent is expressed."
+      ]
+    },
+    {
+      "rule_id": "no_specific_rule",
+      "priority_rank": 0,
+      "when": {
+        "all": []
+      },
+      "behavior": {
+        "summary": "No specific blocker rule matched",
+        "input_signals": []
+      },
+      "bottleneck_hypothesis": "There is not enough evidence to select a targeted intervention.",
+      "conversion_relationship": {
+        "status": "not_estimated",
+        "association_id": null
+      },
+      "next_best_action": {
+        "action_id": "wait_or_ask",
+        "title": "Ask what would help or wait",
+        "channel": "In-product only when contextually appropriate",
+        "pal_brief": "Do not assume a blocker. Ask the user if they want help or take no action.",
+        "success_event": "user_need_confirmed_or_no_action"
+      },
+      "guardrails": [
+        "No automatic follow-up without eligibility and channel permission."
+      ]
+    }
+  ],
+  "conversion_associations": [
+    {
+      "association_id": "no_meaningful_activity_day_7",
+      "when": {
+        "all": [
+          {
+            "field": "daysSinceSignup",
+            "operator": "gte",
+            "value": 7
+          },
+          {
+            "field": "daysSinceLastProductActivity",
+            "operator": "gte",
+            "value": 7
+          },
+          {
+            "field": "firstValue",
+            "operator": "equals",
+            "value": false
+          }
+        ]
+      },
+      "label": "No meaningful product activity for seven days",
+      "relative_conversion_index": 0.5,
+      "display_value": "0.5x the cohort baseline conversion rate",
+      "outcome": "Paid conversion by day 60",
+      "comparison_cohort": "Eligible free accounts in the same mature signup cohort",
+      "evidence_status": "Illustrative hypothesis; not validated",
+      "source_note": "Example proposed by the case author; replace with measured Tavus cohort data",
+      "causal_claim": false,
+      "used_to_rank_actions": false
+    },
+    {
+      "association_id": "industry_use_case_fit",
+      "when": {
+        "all": [
+          {
+            "field": "industryUseCaseFit",
+            "operator": "equals",
+            "value": true
+          }
+        ]
+      },
+      "label": "Declared use case fits an illustrative target-industry pattern",
+      "relative_conversion_index": 1.3,
+      "display_value": "1.3x the cohort baseline conversion rate",
+      "outcome": "Paid conversion by day 60",
+      "comparison_cohort": "Eligible free accounts in the same mature signup cohort",
+      "evidence_status": "Illustrative hypothesis; not validated",
+      "source_note": "Example proposed by the case author; replace with measured Tavus cohort data",
+      "causal_claim": false,
+      "used_to_rank_actions": false
+    }
+  ]
+}

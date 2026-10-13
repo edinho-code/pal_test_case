@@ -1,0 +1,66 @@
+{
+  "title": "Proactive Signal Library",
+  "description": "Example lifecycle signals that can prompt one timely, helpful PAL conversation. These are proposed patterns, not live Tavus telemetry or enabled triggers.",
+  "signals": [
+    {
+      "id": "pricing_research",
+      "category": "Intent and plan fit",
+      "title": "Exploring pricing or plan details",
+      "positive_signal": true,
+      "trigger": "A user visits the pricing or plan-comparison page multiple times in a short window, or explicitly opens a plan comparison.",
+      "interpretation": "The user may be evaluating capacity, price, or plan differences. Page activity alone is not confirmed buying intent.",
+      "opener": "Hi there, I noticed you have been exploring our plans. Are you comparing what each plan includes, or are you running into a limit? I can help you find the right fit.",
+      "next_best_action": "Ask what the user is trying to accomplish, answer the specific plan question, and compare options against verified usage and current plan terms.",
+      "success_metric": "User confirms the plan question was answered or identifies an eligible plan that fits the stated need.",
+      "guardrail": "Do not infer willingness to pay, create urgency, or present unverified pricing or plan limits. Offer an upgrade only when the user confirms a relevant need."
+    },
+    {
+      "id": "support_ticket_waiting",
+      "category": "Support and recovery",
+      "title": "Support ticket still open",
+      "positive_signal": false,
+      "trigger": "A support ticket remains unresolved beyond its expected response window, or the user revisits the same help topic while the ticket is open.",
+      "interpretation": "The issue may still be blocking progress; ticket status alone does not reveal urgency or whether the user already got help elsewhere.",
+      "opener": "Hi there, I noticed your support ticket about [topic] is still open. Is this blocking what you are trying to do? I can help route it for an update.",
+      "next_best_action": "Confirm the issue is still active, then offer a support escalation or status check through an approved workflow.",
+      "success_metric": "Support acknowledges the escalation within the target response window and the user confirms whether the blocker is resolved.",
+      "guardrail": "Ask before escalation when possible. Never claim a ticket was escalated, assigned, or resolved until the support system confirms it. Share only the minimum ticket context."
+    },
+    {
+      "id": "recurring_minute_overage",
+      "category": "Usage and expansion",
+      "title": "Minutes over plan for three consecutive months",
+      "positive_signal": true,
+      "trigger": "Verified usage records show conversation minutes exceeded the included allowance in each of the last three complete billing periods.",
+      "interpretation": "Sustained overage may mean the workflow is growing or the current allowance no longer fits. First confirm the pattern is expected and useful.",
+      "opener": "Hi there, I noticed your workspace has gone over its included conversation minutes in each of the last three months. Is that steady demand, or was it a short-term spike? Do you need more room for your workflows?",
+      "next_best_action": "Review verified usage and the user's forecast. If more capacity is needed, explain the current plan options. A temporary 2×-minutes offer can be mentioned only if it is approved, available, and the account is eligible.",
+      "success_metric": "User confirms the capacity need; measure suitable plan selection or approved offer acceptance alongside retained usage, gross margin, and support/refund guardrails.",
+      "guardrail": "Do not equate overage with upgrade intent. Never promise doubled minutes, alter billing, or grant a promotion unless a trusted policy and system confirm the terms and eligibility."
+    },
+    {
+      "id": "connected_but_no_first_use",
+      "category": "Activation",
+      "title": "API or MCP connected, but no successful first use",
+      "positive_signal": true,
+      "trigger": "A connection or authorization succeeded, but no successful conversation or tool result is recorded within the validated observation window.",
+      "interpretation": "Setup progress is promising, but the user may still need help turning the connection into a useful test.",
+      "opener": "Hi there, I noticed the connection is set up, but I do not see a successful first test recorded yet. What were you hoping to try? I can help you get that first result.",
+      "next_best_action": "Guide one short, low-risk test that matches the user's stated use case and confirm whether the result was useful.",
+      "success_metric": "First successful conversation or tool result, followed by user-confirmed usefulness.",
+      "guardrail": "Check event coverage before interpreting a missing result. Do not claim the integration failed or succeeded without a reliable event."
+    },
+    {
+      "id": "repeat_successful_use",
+      "category": "Adoption and growth",
+      "title": "Repeated successful use across separate days",
+      "positive_signal": true,
+      "trigger": "The account completes useful conversations on multiple distinct days and returns to the same workflow or deploys it.",
+      "interpretation": "The workflow may be becoming habitual and could benefit from a next-step review; repeat use by itself does not mean the user wants to buy more.",
+      "opener": "Hi there, I noticed you have been using [workflow] regularly. What are you hoping to improve next? I can help you look at the next step.",
+      "next_best_action": "Ask what outcome they want next; offer a deployment, workflow optimization, or capacity review only when it matches that stated goal.",
+      "success_metric": "A user-confirmed next workflow milestone, sustained useful repeat use, or an explicitly requested plan review.",
+      "guardrail": "Do not turn engagement into an automatic upsell. Respect contact frequency limits, channel permissions, and opt-outs."
+    }
+  ]
+}

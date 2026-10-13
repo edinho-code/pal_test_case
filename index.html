@@ -1,16 +1,74 @@
 <!doctype html>
 <html lang="en-US">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PAL · Tavus Case</title><link rel="stylesheet" href="styles.css"></head>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f6f2">
+  <title>Tavus Lifecycle NBA · Beta</title>
+  <script>if (window.location.protocol === 'file:') window.location.replace('http://localhost:3000/');</script>
+  <link rel="stylesheet" href="styles.css">
+</head>
 <body>
-<header><a class="brand" href="./">PAL<span> / Tavus Case</span></a><span class="badge">Prototype · local data</span></header>
-<main>
-<section class="intro"><p class="eyebrow">CONVERSATIONS THAT MOVE THINGS FORWARD</p><h1>Meet your lead.<br>Keep the conversation going.</h1><p>A simple workspace for your Tavus case.</p></section>
-<div class="layout"><section class="panel"><div class="section-title"><h2>Leads</h2><span id="count"></span></div>
-<form id="lead-form"><label>Name<input name="name" required maxlength="100" placeholder="Contact name"></label><label>Email<input name="email" type="email" required maxlength="200" placeholder="contact@company.com"></label><label>Company<input name="company" maxlength="100" placeholder="Company"></label><button>Add lead</button></form>
-<label class="search">Search<input id="search" type="search" placeholder="Name, email, or company"></label>
-<div class="table-wrap"><table><thead><tr><th>Contact</th><th>Company</th><th>Status</th><th></th></tr></thead><tbody id="leads"></tbody></table></div><p id="empty" hidden>No leads found.</p>
-</section><aside class="panel"><div class="section-title"><h2>Conversation workspace</h2><span class="badge">Tavus pending</span></div><div class="call-placeholder"><div class="orb">P</div><h3>Your PAL belongs here</h3><p>Live calls will connect through a backend that keeps your Tavus API key secure.</p></div>
-<p id="selection">Select a lead in the table to record the outcome.</p>
-<form id="outcome-form" hidden><label>Status<select name="status"><option>New</option><option>In conversation</option><option>Qualified</option><option>Follow up</option></select></label><label>Summary<textarea name="summary" rows="4" maxlength="4000" placeholder="Needs and confirmed details"></textarea></label><label>Next step<input name="nextStep" maxlength="500" placeholder="For example: prepare a demo"></label><button>Save outcome</button></form></aside></div>
-<p class="footnote">This prototype does not make Tavus calls. Records stay in this browser; use fictional data.</p><p id="notice" role="status" aria-live="polite"></p>
-</main><script src="app.js"></script></body></html>
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="Tavus Lifecycle NBA home"><span class="brand-mark">T</span><span>Tavus <span class="brand-muted">Growth Lab</span></span></a>
+    <div class="topbar-right"><span class="environment"><span class="status-dot"></span>Local beta · synthetic data</span><button id="reset-demo" class="button button-quiet" type="button" hidden>Reset demo</button></div>
+  </header>
+
+  <main>
+    <section id="pal-entry" class="pal-entry" aria-labelledby="entry-title">
+      <div class="entry-copy"><p class="eyebrow">TAVUS PROACTIVE PAL BETA</p><h1 id="entry-title">Let’s talk about your Tavus setup.</h1><p>Choose your company scenario. The PAL will open with one specific product signal and a planned next step.</p></div>
+      <form id="pal-entry-form" class="entry-form">
+        <label>Your name<input id="entry-name" name="participantName" type="text" maxlength="60" autocomplete="name" placeholder="e.g. Alex Morgan" required pattern="[\p{L}\p{M} .’'-]{1,60}" title="Use letters, spaces, apostrophes, periods, or hyphens."></label>
+        <label>Company / account<select id="entry-account" name="accountId" required><option value="">Choose a company scenario</option></select></label>
+        <div id="entry-case-preview" class="entry-case-preview" hidden aria-live="polite"></div>
+        <button id="entry-start" class="button button-primary entry-start" type="submit" disabled>Start proactive PAL conversation <span>→</span></button>
+        <div id="entry-session-result" class="entry-session-result" hidden aria-live="polite"></div>
+        <p id="entry-status" class="entry-status" role="status" aria-live="polite">Select a company to preview the signal and next best action.</p>
+      </form>
+      <button id="open-dashboard" class="entry-dashboard-link" type="button">Open the growth dashboard</button>
+    </section>
+
+    <div id="dashboard-content" hidden>
+    <section class="hero">
+      <div><p class="eyebrow">LIFECYCLE NEXT BEST ACTION</p><h1>Help accounts reach value,<br class="desktop-break"> then improve what happens next.</h1><p class="hero-copy">Use product signals and customer outcomes to identify a bottleneck, then let one shared PAL guide the next best action.</p></div>
+      <div class="hero-note"><span class="note-icon">i</span><p><strong>Beta prototype</strong><br>Every account and event is fictional. Recommendations use visible rules, not a trained model.</p></div>
+    </section>
+
+    <section class="metric-grid" aria-label="Demo cohort summary">
+      <article class="metric-card"><span class="metric-label">Demo accounts</span><strong id="metric-accounts">—</strong><span class="metric-foot">Synthetic cohort</span></article>
+      <article class="metric-card"><span class="metric-label">Reached first value</span><strong id="metric-activated">—</strong><span class="metric-foot">Useful conversation completed</span></article>
+      <article class="metric-card"><span class="metric-label">Need an action</span><strong id="metric-actionable">—</strong><span class="metric-foot">Rule matched; hypothesis to validate</span></article>
+      <article class="metric-card metric-card-accent"><span class="metric-label">Primary pilot outcome</span><strong>First useful outcome</strong><span class="metric-foot">Free-to-paid is a downstream D60 measure</span></article>
+    </section>
+
+    <nav class="workspace-tabs" role="tablist" aria-label="Growth Lab views">
+      <button id="tab-accounts" class="workspace-tab active" type="button" role="tab" aria-selected="true" aria-controls="accounts-view">Accounts &amp; NBA</button>
+      <button id="tab-signals" class="workspace-tab" type="button" role="tab" aria-selected="false" aria-controls="signal-library-view">Signal library <span class="tab-count">5</span></button>
+    </nav>
+
+    <section id="accounts-view" class="workspace" role="tabpanel" aria-labelledby="tab-accounts" aria-label="Lifecycle NBA workspace">
+      <section class="panel accounts-panel">
+        <div class="panel-heading"><div><p class="eyebrow">ACCOUNT COHORT</p><h2>Lifecycle accounts</h2></div><span id="account-count" class="count-pill">—</span></div>
+        <div class="toolbar"><label class="search-box"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Search accounts" aria-label="Search accounts"></label><label class="filter-box"><span class="sr-only">Filter by setup path</span><select id="path-filter"><option value="all">All paths</option><option value="API">API</option><option value="Hosted deployment">Hosted deployment</option><option value="MCP">MCP</option></select></label></div>
+        <div class="table-wrap"><table><thead><tr><th>Account</th><th>Stage</th><th>Setup path</th><th>Next action</th><th></th></tr></thead><tbody id="accounts"></tbody></table><div id="empty-state" class="empty-state" hidden>No accounts match this filter.</div></div>
+        <p class="table-footnote"><span class="legend-dot"></span> Synthetic demo records · select an account to inspect its signals</p>
+      </section>
+
+      <aside id="account-detail" class="panel detail-panel" aria-live="polite">
+        <div class="empty-detail"><div class="empty-icon">↗</div><h2>Select an account</h2><p>See its lifecycle evidence, NBA rationale, and PAL intervention flow.</p></div>
+      </aside>
+    </section>
+
+    <section id="signal-library-view" class="signal-library panel" role="tabpanel" aria-labelledby="tab-signals" aria-label="Proactive signal library" hidden></section>
+
+    <section id="analytics-dashboard" class="analytics-dashboard panel" aria-label="Proactive experiment dashboard"></section>
+    <section id="demo-outcomes" class="demo-outcomes panel" aria-label="Local demo conversation outcomes"></section>
+
+    <section class="method-strip"><div><span class="method-step">01</span><span><strong>Observe</strong><small>Product and user-stated signals</small></span></div><span class="method-arrow">→</span><div><span class="method-step">02</span><span><strong>Diagnose</strong><small>Explainable bottleneck hypothesis</small></span></div><span class="method-arrow">→</span><div><span class="method-step">03</span><span><strong>Act</strong><small>One eligible, useful intervention</small></span></div><span class="method-arrow">→</span><div><span class="method-step">04</span><span><strong>Measure</strong><small>Acceptance, completion, account progress</small></span></div></section>
+    <footer><span>Growth case prototype · No CRM connection · Live PAL calls are user-initiated</span><a href="docs/project-scope.md">Read the case scope</a></footer>
+    </div>
+    <p id="notice" role="status" aria-live="polite" class="notice"></p>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

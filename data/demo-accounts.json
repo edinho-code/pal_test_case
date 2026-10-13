@@ -1,0 +1,425 @@
+[
+  {
+    "id": "northstar",
+    "name": "Northstar Labs",
+    "initials": "NL",
+    "plan": "Free evaluation",
+    "industry": "Software",
+    "industryUseCaseFit": false,
+    "daysSinceSignup": 2,
+    "daysSinceLastProductActivity": 0,
+    "stage": "Setup blocked",
+    "path": "API",
+    "need": "Build a support assistant for the product website.",
+    "palCreated": true,
+    "conversationStarted": false,
+    "firstValue": false,
+    "repeatUse": false,
+    "apiErrors": 3,
+    "apiConnected": false,
+    "mcpLinked": false,
+    "mcpToolUsed": false,
+    "deploymentPublished": false,
+    "actionStatus": "not-offered",
+    "events": [
+      {
+        "time": "Day 0",
+        "name": "Account created",
+        "provenance": "Synthetic product event"
+      },
+      {
+        "time": "Day 1",
+        "name": "PAL created",
+        "provenance": "Synthetic product event"
+      },
+      {
+        "time": "Day 2",
+        "name": "API authentication failed (3 attempts)",
+        "provenance": "Synthetic product event"
+      }
+    ],
+    "planType": "free_trial",
+    "minutesConsumed": 18,
+    "creditsExhausted": false,
+    "conversationCount": 0
+  },
+  {
+    "id": "mosaic",
+    "name": "Mosaic Studio",
+    "initials": "MS",
+    "plan": "Free evaluation",
+    "industry": "Software",
+    "industryUseCaseFit": false,
+    "daysSinceSignup": 2,
+    "daysSinceLastProductActivity": 1,
+    "stage": "First conversation",
+    "path": "Hosted deployment",
+    "need": "Try a product tour with a small group of customers.",
+    "palCreated": true,
+    "conversationStarted": false,
+    "firstValue": false,
+    "repeatUse": false,
+    "apiErrors": 0,
+    "apiConnected": false,
+    "mcpLinked": false,
+    "mcpToolUsed": false,
+    "deploymentPublished": false,
+    "actionStatus": "not-offered",
+    "events": [
+      {
+        "time": "Day 0",
+        "name": "Account created",
+        "provenance": "Synthetic product event"
+      },
+      {
+        "time": "Day 1",
+        "name": "PAL created",
+        "provenance": "Synthetic product event"
+      },
+      {
+        "time": "Day 2",
+        "name": "No conversation started yet",
+        "provenance": "Synthetic product event"
+      }
+    ],
+    "planType": "free_trial",
+    "minutesConsumed": 7,
+    "creditsExhausted": false,
+    "conversationCount": 0
+  },
+  {
+    "id": "harbor",
+    "name": "Harbor Support",
+    "initials": "HS",
+    "plan": "Free evaluation",
+    "industry": "Software",
+    "industryUseCaseFit": false,
+    "daysSinceSignup": 2,
+    "daysSinceLastProductActivity": 0,
+    "stage": "Trial credits exhausted",
+    "path": "Hosted deployment",
+    "need": "Test an AI support assistant for a small set of customer questions.",
+    "palCreated": true,
+    "conversationStarted": true,
+    "conversationCount": 1,
+    "firstValue": false,
+    "repeatUse": false,
+    "apiErrors": 0,
+    "apiConnected": false,
+    "mcpLinked": false,
+    "mcpToolUsed": false,
+    "deploymentPublished": false,
+    "actionStatus": "not-offered",
+    "events": [
+      {
+        "time": "Day 0",
+        "name": "Account created",
+        "provenance": "Synthetic product event"
+      },
+      {
+        "time": "Day 1",
+        "name": "PAL created",
+        "provenance": "Synthetic product event"
+      },
+      {
+        "time": "Day 2",
+        "name": "Trial minute allowance exhausted after one conversation",
+        "provenance": "Synthetic product event"
+      },
+      {
+        "time": "Day 2",
+        "name": "First useful outcome not reached",
+        "provenance": "Synthetic product event"
+      }
+    ],
+    "planType": "free_trial",
+    "minutesConsumed": 20,
+    "creditsExhausted": true,
+    "daysToCreditExhaustion": 2
+  },
+  {
+    "id": "beacon",
+    "name": "Beacon Health",
+    "initials": "BH",
+    "plan": "Free evaluation",
+    "industry": "Healthcare",
+    "industryUseCaseFit": false,
+    "daysSinceSignup": 3,
+    "daysSinceLastProductActivity": 0,
+    "stage": "Deployment test",
+    "path": "Hosted deployment",
+    "need": "Offer a private demo to prospective clinic partners.",
+    "palCreated": true,
+    "conversationStarted": false,
+    "firstValue": false,
+    "repeatUse": false,
+    "apiErrors": 0,
+    "apiConnected": false,
+    "mcpLinked": false,
+    "mcpToolUsed": false,
+    "deploymentPublished": true,
+    "actionStatus": "not-offered",
+    "events": [
+      {
+        "time": "Day 0",
+        "name": "Account created",
+        "provenance": "Synthetic product event"
+      },
+      {
+        "time": "Day 1",
+        "name": "Hosted deployment published",
+        "provenance": "Synthetic product event"
+      },
+      {
+        "time": "Day 3",
+        "name": "No visitor conversation observed",
+        "provenance": "Synthetic product event"
+      }
+    ],
+    "planType": "free_trial",
+    "minutesConsumed": 12,
+    "creditsExhausted": false,
+    "conversationCount": 0
+  },
+  {
+    "id": "orbit",
+    "name": "Orbit AI",
+    "initials": "OA",
+    "plan": "Free evaluation",
+    "industry": "Software",
+    "industryUseCaseFit": false,
+    "daysSinceSignup": 2,
+    "daysSinceLastProductActivity": 0,
+    "stage": "Connector setup",
+    "path": "MCP",
+    "need": "Let the assistant look up internal product documentation.",
+    "palCreated": true,
+    "conversationStarted": true,
+    "firstValue": false,
+    "repeatUse": false,
+    "apiErrors": 0,
+    "apiConnected": false,
+    "mcpLinked": true,
+    "mcpToolUsed": false,
+    "deploymentPublished": false,
+    "actionStatus": "not-offered",
+    "events": [
+      {
+        "time": "Day 0",
+        "name": "Account created",
+        "provenance": "Synthetic product event"
+      },
+      {
+        "time": "Day 1",
+        "name": "MCP connector linked",
+        "provenance": "Synthetic product event"
+      },
+      {
+        "time": "Day 2",
+        "name": "No tool call observed",
+        "provenance": "Synthetic product event"
+      }
+    ],
+    "planType": "free_trial",
+    "minutesConsumed": 21,
+    "creditsExhausted": false,
+    "conversationCount": 1
+  },
+  {
+    "id": "cedar",
+    "name": "Cedar Systems",
+    "initials": "CS",
+    "plan": "Free evaluation",
+    "industry": "Software",
+    "industryUseCaseFit": false,
+    "daysSinceSignup": 2,
+    "daysSinceLastProductActivity": 0,
+    "stage": "First value reached",
+    "path": "API",
+    "need": "Automate first-line support triage.",
+    "palCreated": true,
+    "conversationStarted": true,
+    "firstValue": true,
+    "repeatUse": false,
+    "apiErrors": 0,
+    "apiConnected": true,
+    "mcpLinked": false,
+    "mcpToolUsed": false,
+    "deploymentPublished": true,
+    "actionStatus": "complete",
+    "events": [
+      {
+        "time": "Day 0",
+        "name": "Account created",
+        "provenance": "Synthetic product event"
+      },
+      {
+        "time": "Day 1",
+        "name": "API connection successful",
+        "provenance": "Synthetic product event"
+      },
+      {
+        "time": "Day 2",
+        "name": "First useful conversation completed",
+        "provenance": "Synthetic product event"
+      }
+    ],
+    "planType": "free_trial",
+    "minutesConsumed": 24,
+    "creditsExhausted": false,
+    "conversationCount": 1
+  },
+  {
+    "id": "fable",
+    "name": "Fable Commerce",
+    "initials": "FC",
+    "plan": "Free evaluation",
+    "industry": "Commerce",
+    "industryUseCaseFit": true,
+    "daysSinceSignup": 9,
+    "daysSinceLastProductActivity": 7,
+    "stage": "Use case discovery",
+    "path": "Not selected",
+    "need": "Still exploring possible customer support workflows.",
+    "palCreated": false,
+    "conversationStarted": false,
+    "firstValue": false,
+    "repeatUse": false,
+    "apiErrors": 0,
+    "apiConnected": false,
+    "mcpLinked": false,
+    "mcpToolUsed": false,
+    "deploymentPublished": false,
+    "actionStatus": "not-offered",
+    "events": [
+      {
+        "time": "Day 0",
+        "name": "Account created",
+        "provenance": "Synthetic product event"
+      },
+      {
+        "time": "Day 2",
+        "name": "Commerce support use case viewed",
+        "provenance": "Synthetic product event"
+      },
+      {
+        "time": "Day 3",
+        "name": "Use case not confirmed",
+        "provenance": "User-stated (synthetic)"
+      }
+    ],
+    "planType": "free_trial",
+    "minutesConsumed": 0,
+    "creditsExhausted": false,
+    "conversationCount": 0
+  },
+  {
+    "id": "lighthouse",
+    "name": "Lighthouse Support",
+    "initials": "LS",
+    "plan": "Paid plan \u00b7 Usage-based",
+    "planType": "paid",
+    "industry": "Software",
+    "industryUseCaseFit": false,
+    "daysSinceSignup": 18,
+    "daysSinceLastProductActivity": 0,
+    "stage": "Repeat use \u00b7 Credits exhausted",
+    "path": "Hosted deployment",
+    "need": "Keep a customer support assistant available for the support team.",
+    "palCreated": true,
+    "conversationStarted": true,
+    "conversationCount": 38,
+    "firstValue": true,
+    "repeatUse": true,
+    "apiErrors": 0,
+    "apiConnected": false,
+    "mcpLinked": false,
+    "mcpToolUsed": false,
+    "deploymentPublished": true,
+    "minutesConsumed": 300,
+    "creditsExhausted": true,
+    "daysToCreditExhaustion": 18,
+    "actionStatus": "not-offered",
+    "events": [
+      {
+        "time": "Day 0",
+        "name": "Account created on a paid usage-based plan",
+        "provenance": "Synthetic product event"
+      },
+      {
+        "time": "Day 2",
+        "name": "First useful support conversation completed",
+        "provenance": "Synthetic product event"
+      },
+      {
+        "time": "Day 8",
+        "name": "Repeat workflow use recorded",
+        "provenance": "Synthetic product event"
+      },
+      {
+        "time": "Day 18",
+        "name": "Plan minute allowance exhausted after repeat use",
+        "provenance": "Synthetic product event"
+      }
+    ]
+  },
+  {
+    "id": "vantage-sdr",
+    "name": "Vantage Sales",
+    "initials": "VS",
+    "plan": "Paid evaluation",
+    "planType": "paid",
+    "industry": "Software",
+    "industryUseCaseFit": true,
+    "daysSinceSignup": 25,
+    "daysSinceLastProductActivity": 0,
+    "stage": "AI SDR performance review",
+    "path": "Hosted deployment",
+    "need": "Improve the share of AI SDR meetings that become qualified opportunities.",
+    "palCreated": true,
+    "conversationStarted": true,
+    "conversationCount": 54,
+    "firstValue": true,
+    "repeatUse": true,
+    "apiErrors": 0,
+    "apiConnected": true,
+    "mcpLinked": false,
+    "mcpToolUsed": false,
+    "deploymentPublished": true,
+    "minutesConsumed": 220,
+    "creditsExhausted": false,
+    "daysToCreditExhaustion": null,
+    "actionStatus": "not-offered",
+    "agentPerformance": {
+      "deployed": true,
+      "meetingsHeld": 54,
+      "qualifiedOpportunities": 8,
+      "qualificationRate": 0.148,
+      "targetQualificationRate": 0.25,
+      "minimumMeetingsForReview": 30,
+      "dataWindowDays": 30
+    },
+    "events": [
+      {
+        "time": "Day 0",
+        "name": "Account created",
+        "provenance": "Synthetic product event"
+      },
+      {
+        "time": "Day 4",
+        "name": "AI SDR deployment published",
+        "provenance": "Synthetic product event"
+      },
+      {
+        "time": "Days 5\u201325",
+        "name": "54 meetings held; 8 became qualified opportunities",
+        "provenance": "Synthetic outcome table"
+      },
+      {
+        "time": "Day 25",
+        "name": "Qualification rate below the account target in the synthetic demo",
+        "provenance": "Derived synthetic metric"
+      }
+    ]
+  }
+]

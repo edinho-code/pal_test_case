@@ -1,46 +1,7 @@
-# Proposed MVP
+# MVP Summary
 
-## Objective
+This MVP demonstrates a lifecycle-based Next Best Action (NBA) strategy for Tavus adoption. It uses fictional account and event records to show how product behavior can inform a bottleneck hypothesis, an explainable action, optional PAL assistance, and a measurable outcome.
 
-Demonstrate lead qualification through a Tavus conversation, with structured outcomes in a simple table and no external CRM integration.
+The prototype loads account data from `data/demo-accounts.json` and its human-authored decision policy from `data/nba-rules.json`. Before starting PAL, the demo asks for a participant name and explicit synthetic account selection; that selection determines the matched NBA case and context. Conversion relationships are clearly labeled illustrative hypotheses and do not rank actions. An optional local Node backend can create a Tavus conversation using the selected synthetic account, participant name, matched NBA rule, and server-side business context in API test mode or live mode. The browser records simulated interaction outcomes and user-stated helpfulness in a local, exportable log; it does not receive Tavus end/abandon callbacks, integrate an external CRM, send notifications, use a trained model, or measure conversion impact.
 
-## Confirmed decisions
-
-- No external CRM integration.
-- Initial demonstration data stored in a browser-local table.
-- Code, UI, and project documentation in English.
-
-## Open decisions
-
-- Target segment and product offered by the SDR.
-- Backend stack, hosting, and user identification.
-- Qualification fields and qualified-lead criteria.
-- Spoken PAL language for the demonstration.
-
-## Proposed scope
-
-- Lead list, detail view, and activity history.
-- Start and end a Tavus conversation.
-- PAL with discovery questions and approved product knowledge.
-- Summary, needs, confirmed information, and next step.
-- Synchronization states and failure recovery.
-
-Automatic scheduling and external communications require a later scope decision.
-
-## Acceptance criteria
-
-- Tavus API key stays out of browser code and Git.
-- The backend links each session to an authorized lead.
-- Users can start and end a conversation.
-- Missing data remains unknown.
-- Outcomes attach to the correct lead; repeated events do not duplicate activities.
-- Integration failures are visible and recoverable.
-- The demonstration clearly identifies fictional data and simulated integrations.
-
-## Planned validation
-
-Check the local demonstration and session creation with test_mode first. A real conversation must validate PAL behavior, tools, and saved outcomes. Cover abandonment, persistence failures, and repeated events.
-
-## Candidate metrics
-
-Qualification completion, field completeness, successful outcome persistence, time to outcome, and cost per qualification. No results have been measured yet.
+See [the case scope](project-scope.md), [the NBA data model](nba-data-model.md), and [the beta runbook](beta-runbook.md) for definitions, assumptions, and pilot guidance.

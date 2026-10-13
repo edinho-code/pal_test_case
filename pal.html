@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Start your Tavus PAL session</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar"><a class="brand" href="/" aria-label="Tavus PAL demo home"><span class="brand-mark">T</span><span>Tavus <span class="brand-muted">PAL Demo</span></span></a><div class="topbar-right"><span class="environment"><span class="status-dot"></span>Lifecycle growth case</span></div></header>
+  <main>
+    <section class="pal-entry">
+      <div class="entry-copy"><p class="eyebrow">A SIGNAL. A CONVERSATION. A NEXT STEP.</p><h1>Let’s talk about your Tavus setup.</h1><p>Choose a company scenario. Your PAL will start with a relevant product signal, listen to your input, and help with one focused next step.</p><p class="microcopy">Fictional account scenarios · Real Tavus video conversations</p></div>
+      <form id="session-form" class="entry-form">
+        <label>Your name<input id="session-name" type="text" maxlength="60" autocomplete="name" required placeholder="e.g. Alex Morgan"></label>
+        <label>Company / account<select id="session-account" required><option value="">Choose a company scenario</option></select></label>
+        <p id="session-case" class="entry-status"></p>
+        <button id="session-start" class="button button-primary entry-start" type="submit" disabled>Start PAL conversation</button>
+        <div id="session-result" class="entry-session-result" hidden>
+          <strong>Your session is ready.</strong>
+          <a id="session-join" class="button button-primary entry-join" target="_blank" rel="noopener noreferrer">Open live PAL session ↗</a>
+          <label>Or copy this link into your browser<input id="session-url" type="text" readonly aria-label="Live PAL session URL" style="width:100%;margin-top:8px" onclick="this.select()"></label>
+        </div>
+        <p id="session-status" class="entry-status" role="status" aria-live="polite">Loading company scenarios…</p>
+      </form>
+      <a href="/dashboard.html" class="entry-dashboard-link">Open the growth dashboard</a>
+    </section>
+  </main>
+  <script src="pal-session.js?v=1"></script>
+</body>
+</html>

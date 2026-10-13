@@ -1,0 +1,42 @@
+{
+  "data_status": "Synthetic illustration; not measured Tavus or customer results.",
+  "pal_experiment": {
+    "experiment_id": "pal_activation_assist_v1",
+    "title": "Proactive PAL onboarding assist",
+    "status": "Illustrative A/B dashboard",
+    "primary_metric": "First useful outcome within 7 days of signup",
+    "minimum_eligible_accounts_per_arm": 30,
+    "arms": [
+      {
+        "name": "Standard onboarding",
+        "eligible_accounts": 40,
+        "first_value_within_7_days": 12,
+        "pal_invitations": 0,
+        "pal_accepted": 0,
+        "pal_completed": 0,
+        "pal_abandoned": 0,
+        "average_pal_minutes": null
+      },
+      {
+        "name": "Proactive PAL + NBA context",
+        "eligible_accounts": 40,
+        "first_value_within_7_days": 18,
+        "pal_invitations": 40,
+        "pal_accepted": 22,
+        "pal_completed": 17,
+        "pal_abandoned": 5,
+        "average_pal_minutes": 4.6
+      }
+    ]
+  },
+  "ai_sdr_health": {
+    "account_id": "vantage-sdr",
+    "data_window_days": 30,
+    "meetings_held": 54,
+    "qualified_opportunities": 8,
+    "qualification_rate": 0.148,
+    "target_rate": 0.25,
+    "minimum_meetings_for_review": 30,
+    "classification": "Below target; investigate cause before changing the agent."
+  }
+}

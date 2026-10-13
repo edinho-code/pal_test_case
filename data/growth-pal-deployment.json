@@ -1,0 +1,36 @@
+{
+  "pal_name": "Tavus Onboarding Specialist",
+  "pal_id": "p447fc20f4a7",
+  "face_name": "Brooke",
+  "face_id": "rc8992fe8e8e",
+  "face_model": "phoenix-4.5",
+  "objectives_id": "o3219a468312f",
+  "guardrails": [
+    {
+      "name": "no_unverified_business_claims",
+      "id": "g21ca10836027"
+    },
+    {
+      "name": "no_unsanctioned_commercial_or_product_changes",
+      "id": "gc3dab5f85acb"
+    },
+    {
+      "name": "no_emotion_based_sales_decisions",
+      "id": "g89aaf801d14b"
+    },
+    {
+      "name": "protect_secrets_and_personal_data",
+      "id": "g11e511cae40d"
+    }
+  ],
+  "prompt_version": "1.5.1",
+  "created_at": "2026-10-12T23:03:27.663073Z",
+  "last_prompt_update_at": "2026-10-13T20:58:53Z",
+  "configuration_status": "Prompt v1.5.1 synced to live Tavus; shortened the independent spoken AI disclosure and removed the generic onboarding introduction from the fallback greeting. Remote settings read-back verified; spoken behavior requires a fresh live conversation.",
+  "verbal_disclosure": "I'm Tavus AI.",
+  "visual_disclosure": "Tavus AI",
+  "fallback_greeting": "Hi, glad we connected.",
+  "greeting_policy": "Every app-created session supplies a deterministic custom_greeting with participant name, selected account signal, and one question. The separate AI disclosure remains enabled.",
+  "test_mode_conversation_id": "c3b9f1025bb5d451",
+  "quality_status": "Live PAL read-back verified after correcting stale Growth Lab disclosure and removing generated opening override. Deterministic case greetings and the new satisfaction/offer branches still need evaluation in a new live dialogue; offers are hypothetical and billing is disconnected."
+}
