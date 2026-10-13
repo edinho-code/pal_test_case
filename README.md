@@ -2,6 +2,8 @@
 
 A small Growth case prototype showing how lifecycle signals could identify an onboarding bottleneck, recommend one next best action, and offer user-controlled help through a Tavus PAL.
 
+[Open the PAL demo](https://pal-test-case.vercel.app/) · [Open the strategy dashboard](https://pal-test-case.vercel.app/dashboard.html)
+
 ## Run the prototype locally
 
 From this folder, run the Node server:

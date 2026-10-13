@@ -40,6 +40,11 @@ async function initialize() {
     renderAnalytics();
     renderDemoOutcomes();
     renderSignalLibrary();
+    if (window.location.pathname === '/dashboard.html') {
+      document.querySelector('#pal-entry').hidden = true;
+      document.querySelector('#dashboard-content').hidden = false;
+      document.querySelector('#reset-demo').hidden = false;
+    }
   } catch (error) {
     notice.textContent = `${error.message} Run this app from its folder with a local web server.`;
   }
